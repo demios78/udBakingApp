@@ -22,7 +22,7 @@ public class PicassoDatabindingAdapter {
     public static void loadImage(ImageView view, String imageUrl) {
         if (TextUtils.isEmpty(imageUrl)) {
             Picasso.get()
-                    .load(R.drawable.ic_camera_roll)
+                    .load(R.drawable.ic_broken_image)
                     .placeholder(R.drawable.ic_camera_roll)
                     .into(view);
             return;
