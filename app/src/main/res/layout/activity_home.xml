@@ -33,13 +33,13 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--app:adapter="@{model.adapter}"-->
-            <!--app:layoutManager="android.support.v7.widget.GridLayoutManager"-->
-            <!--app:spanCount="@integer/grid_columns"-->
-            <!--/>-->
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="?android:attr/actionBarSize"
+            app:adapter="@{model.adapter}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            />
 
     </android.support.design.widget.CoordinatorLayout>
 </layout>

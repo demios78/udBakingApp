@@ -26,6 +26,12 @@ public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter {
         notifyItemInserted(items.size() - 1);
     }
 
+    public void addItems(List<V> items) {
+        int oldList = this.items.size();
+        this.items.addAll(items);
+        notifyItemRangeInserted(oldList, items.size());
+    }
+
     @Override
     protected H getHandler(int position) {
         return handler;

@@ -8,7 +8,7 @@ public class Ingredient {
 
     @SerializedName("quantity")
     @Expose
-    public Integer quantity;
+    public Float quantity;
     @SerializedName("measure")
     @Expose
     public String measure;
