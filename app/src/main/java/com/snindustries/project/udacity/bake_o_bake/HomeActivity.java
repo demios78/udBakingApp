@@ -1,13 +1,48 @@
 package com.snindustries.project.udacity.bake_o_bake;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.ViewModelProviders;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+
+import com.snindustries.project.udacity.bake_o_bake.databinding.ActivityHomeBinding;
+import com.snindustries.project.udacity.bake_o_bake.utils.ListBindingAdapter;
+import com.snindustries.project.udacity.bake_o_bake.webservice.model.Recipe;
+
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        ActivityHomeBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
+        ViewModel viewModel = ViewModelProviders.of(this).get(ViewModel.class);
+        binding.setModel(viewModel);
+        binding.setHandler(new Handler());
+        binding.setLifecycleOwner(this);
     }
+
+    private static class BakingListAdapter extends ListBindingAdapter<Recipe, Handler> {
+        public BakingListAdapter(@NonNull List<Recipe> items, @NonNull Handler handler, int layoutID) {
+            super(items, handler, layoutID);
+        }
+    }
+
+    public static class Handler {
+
+    }
+
+    public static class ViewModel extends AndroidViewModel {
+        BakingListAdapter adapter;
+
+        public ViewModel(@NonNull Application application) {
+            super(application);
+        }
+    }
+
+
 }

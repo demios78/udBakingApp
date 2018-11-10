@@ -1,7 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "com.snindustries.project.udacity.bake_o_bake"
         minSdkVersion 24
@@ -9,6 +12,14 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        //Room Schema output
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         debug {
@@ -27,7 +38,7 @@ android {
 }
 
 dependencies {
-    def appCompat = "27.1.1"
+    def appCompat = "28.0.0"
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.android.support:appcompat-v7:$appCompat"
@@ -68,5 +79,8 @@ dependencies {
     //LocalDatabase Viewer Library
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    //Logging
+    implementation 'com.orhanobut:logger:2.2.0'
 
 }
