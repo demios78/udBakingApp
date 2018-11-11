@@ -10,7 +10,7 @@
 
         <variable
             name="handler"
-            type="com.snindustries.project.udacity.bake_o_bake.HomeActivity.Handler" />
+            type="com.snindustries.project.udacity.bake_o_bake.ui.recpiesteps.RecpieStepsFragment.Handler" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -23,12 +23,23 @@
             android:id="@+id/message"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+
             android:text="@{model.recipe.name??`no recipe`}"
-            tools:text="Nutella Pie"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Nutella Pie" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:adapter="@{model.adapter}"
+            app:handler="@{handler}"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/message" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -41,7 +41,7 @@
             app:adapter="@{model.adapter}"
             app:handler="@{handler}"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
-            app:spanCount="2"
+            app:spanCount="@integer/grid_columns"
             />
 
     </android.support.design.widget.CoordinatorLayout>

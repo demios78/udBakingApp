@@ -13,14 +13,10 @@ import java.util.List;
  */
 public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter {
 
-    private H handler;
     private final List<V> items;
+    private H handler;
 
-    public void setHandler(H handler) {
-        this.handler = handler;
-    }
-
-    public ListBindingAdapter(@NonNull List<V> items,  int layoutID) {
+    public ListBindingAdapter(@NonNull List<V> items, int layoutID) {
         super(layoutID);
         this.items = items;
     }
@@ -30,7 +26,10 @@ public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter {
         notifyItemInserted(items.size() - 1);
     }
 
-    public void addItems(List<V> items) {
+    public void addItems(@Nullable List<V> items) {
+        if (items == null) {
+            return;
+        }
         int oldList = this.items.size();
         this.items.addAll(items);
         notifyItemRangeInserted(oldList, items.size());
@@ -58,6 +57,10 @@ public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter {
             items.remove(item);
             notifyItemRemoved(index);
         }
+    }
+
+    public void setHandler(H handler) {
+        this.handler = handler;
     }
 
     public void updateItems(List<V> items) {
