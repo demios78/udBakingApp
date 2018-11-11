@@ -23,8 +23,8 @@ android {
     }
     buildTypes {
         debug {
-            buildConfigField 'String', "ApiKey", IMDB_API_KEY_V3_AUTH //<- Add
-            resValue 'string', "api_key", IMDB_API_KEY_V3_AUTH
+//            buildConfigField 'String', "ApiKey", IMDB_API_KEY_V3_AUTH //<- Add
+//            resValue 'string', "api_key", IMDB_API_KEY_V3_AUTH
         }
         release {
             minifyEnabled false

@@ -32,8 +32,12 @@ public abstract class RecyclerBindingAdapter<V, H> extends RecyclerView.Adapter<
 
     @Override
     public void onBindViewHolder(@NonNull BindingViewHolder holder, int position) {
-        holder.setViewModel(getViewModel(position));
-        holder.setHandler(getHandler(position));
+        if (getViewModel(position) != null) {
+            holder.setViewModel(getViewModel(position));
+        }
+        if (getHandler(position) != null) {
+            holder.setHandler(getHandler(position));
+        }
     }
 
     @NonNull

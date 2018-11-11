@@ -19,11 +19,17 @@ public class RecyclerViewDataBindingAdapter {
      *
      * @param recyclerView passed in automatically with the data binding
      * @param adapter      must be explicitly passed in
-     * @param data         must be explicitly passed in
+     * @param items        must be explicitly passed in
+     * @param handler      handles actions on data
      */
-    @BindingAdapter(value = {"adapter", "data"})
-    public void bindRecyclerViewToAdapter(RecyclerView recyclerView, ListBindingAdapter adapter, List<?> items) {
-        recyclerView.setAdapter(adapter);
-        adapter.updateItems(items);
+    @BindingAdapter(value = {"adapter",  "handler"})
+    public void bindRecyclerViewToAdapter(RecyclerView recyclerView, ListBindingAdapter adapter,  Object handler) {
+        if (adapter != null) {
+            recyclerView.setAdapter(adapter);
+        }
+
+        if (adapter != null && handler != null) {
+            adapter.setHandler(handler);
+        }
     }
 }

@@ -34,11 +34,14 @@
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="?android:attr/actionBarSize"
             app:adapter="@{model.adapter}"
-            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            app:handler="@{handler}"
+            app:layoutManager="android.support.v7.widget.GridLayoutManager"
+            app:spanCount="2"
             />
 
     </android.support.design.widget.CoordinatorLayout>
