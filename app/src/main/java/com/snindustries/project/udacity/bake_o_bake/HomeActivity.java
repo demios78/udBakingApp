@@ -78,7 +78,7 @@ public class HomeActivity extends AppCompatActivity {
             viewModel.setCurrentRecipe(recipe.id);
 
             //IF in phone mode, start activity
-            Intent intent = new Intent(getActivity(), RecpieSteps.class);
+            Intent intent = new Intent(getActivity(), RecipeSteps.class);
             intent.putExtra("EXTRA_RECIPE_ID", recipe.id);
 
             getActivity().startActivity(intent);

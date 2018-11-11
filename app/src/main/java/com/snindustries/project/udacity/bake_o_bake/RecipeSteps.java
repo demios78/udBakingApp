@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.snindustries.project.udacity.bake_o_bake.ui.recpiesteps.RecpieStepsFragment;
 
-public class RecpieSteps extends AppCompatActivity {
+public class RecipeSteps extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
