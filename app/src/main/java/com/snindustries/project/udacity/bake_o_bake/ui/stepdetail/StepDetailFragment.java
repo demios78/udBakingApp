@@ -1,5 +1,6 @@
 package com.snindustries.project.udacity.bake_o_bake.ui.stepdetail;
 
+import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,4 +35,7 @@ public class StepDetailFragment extends Fragment {
         return inflater.inflate(R.layout.step_detail_fragment, container, false);
     }
 
+    public static class StepDetailViewModel extends ViewModel {
+        // TODO: Implement the ViewModel
+    }
 }

@@ -33,12 +33,14 @@ public class RecipeStepsFragment extends Fragment {
         return new RecipeStepsFragment();
     }
 
+    RecipeStepsViewModel viewModel;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         RecpieStepsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.recpie_steps_fragment, container, false, new AppDataBindingComponent());
-        RecipeStepsViewModel viewModel = ViewModelProviders.of(this).get(RecipeStepsViewModel.class);
+         viewModel = ViewModelProviders.of(this).get(RecipeStepsViewModel.class);
         binding.setModel(viewModel);
         binding.setHandler(new Handler());
         binding.setLifecycleOwner(this);
@@ -70,6 +72,10 @@ public class RecipeStepsFragment extends Fragment {
         public LiveData<Recipe> getRecipe() {
             return recipe;
         }
+
+        public void setCurrentStep(Integer id) {
+            repository.applyCurrentStep(id);
+        }
     }
 
     public static class StepFragmentAdapter extends ListBindingAdapter<Step, Handler> {
@@ -82,6 +88,8 @@ public class RecipeStepsFragment extends Fragment {
     public class Handler {
         public void onClick(View view, Step step) {
             Toast.makeText(view.getContext(), "Step: " + step.description, Toast.LENGTH_SHORT).show();
+
+            viewModel.setCurrentStep(step.id);
 
             //IF in phone mode, start activity
             Intent intent = new Intent(getActivity(), StepDetailActivity.class);
