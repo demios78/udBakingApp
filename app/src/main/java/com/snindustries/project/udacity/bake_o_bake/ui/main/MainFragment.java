@@ -47,6 +47,8 @@ public class MainFragment extends Fragment {
         BakingListAdapter adapter = new BakingListAdapter();
         viewModel.recipes.observe(this, adapter::replaceAll);
         binding.recycler.setAdapter(adapter);
+        binding.toolbar.setTitle(R.string.app_name);
+        //binding.recycler.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     }
 
     @Nullable
