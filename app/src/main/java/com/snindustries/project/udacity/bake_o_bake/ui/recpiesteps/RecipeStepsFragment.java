@@ -3,6 +3,7 @@ package com.snindustries.project.udacity.bake_o_bake.ui.recpiesteps;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.snindustries.project.udacity.bake_o_bake.R;
+import com.snindustries.project.udacity.bake_o_bake.RecipeSteps;
+import com.snindustries.project.udacity.bake_o_bake.StepDetailActivity;
 import com.snindustries.project.udacity.bake_o_bake.databinding.RecpieStepsFragmentBinding;
 import com.snindustries.project.udacity.bake_o_bake.utils.AppDataBindingComponent;
 import com.snindustries.project.udacity.bake_o_bake.utils.ListBindingAdapter;
@@ -22,11 +25,12 @@ import com.snindustries.project.udacity.bake_o_bake.webservice.model.Recipe;
 import com.snindustries.project.udacity.bake_o_bake.webservice.model.Step;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class RecpieStepsFragment extends Fragment {
+public class RecipeStepsFragment extends Fragment {
 
-    public static RecpieStepsFragment newInstance() {
-        return new RecpieStepsFragment();
+    public static RecipeStepsFragment newInstance() {
+        return new RecipeStepsFragment();
     }
 
     @Nullable
@@ -38,7 +42,7 @@ public class RecpieStepsFragment extends Fragment {
         binding.setModel(viewModel);
         binding.setHandler(new Handler());
         binding.setLifecycleOwner(this);
-        viewModel.getRecipe().observe(this, recipe -> onSetTitle(recipe));
+        viewModel.getRecipe().observe(this, this::onSetTitle);
         return binding.getRoot();
     }
 
@@ -78,6 +82,12 @@ public class RecpieStepsFragment extends Fragment {
     public class Handler {
         public void onClick(View view, Step step) {
             Toast.makeText(view.getContext(), "Step: " + step.description, Toast.LENGTH_SHORT).show();
+
+            //IF in phone mode, start activity
+            Intent intent = new Intent(getActivity(), StepDetailActivity.class);
+            intent.putExtra("EXTRA_STEP_ID", step.id);
+
+            Objects.requireNonNull(getActivity()).startActivity(intent);
         }
     }
 }

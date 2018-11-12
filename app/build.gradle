@@ -48,8 +48,8 @@ dependencies {
     implementation "com.android.support:design:$appCompat"
 
     // Image loading library
-    implementation ("com.squareup.picasso:picasso:2.71828"){
-        exclude group:"com.android.support", module: "exifinterface"
+    implementation("com.squareup.picasso:picasso:2.71828") {
+        exclude group: "com.android.support", module: "exifinterface"
     }
     implementation "com.squareup.okhttp3:okhttp:3.11.0"
 
