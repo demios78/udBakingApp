@@ -3,12 +3,14 @@ package com.snindustries.project.udacity.bake_o_bake.webservice;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
+import android.support.annotation.NonNull;
 
 import com.orhanobut.logger.Logger;
 import com.snindustries.project.udacity.bake_o_bake.webservice.model.Recipe;
 import com.snindustries.project.udacity.bake_o_bake.webservice.model.Step;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import retrofit2.Call;
@@ -28,17 +30,16 @@ public class Repository {
     private MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
     private LiveData<Recipe> currentRecipe = Transformations.map(recipeQuery, this::getRecipe);
 
-
     private Repository() {
         RecipeClient.get().getApi().getRecipies().enqueue(
                 new Callback<List<Recipe>>() {
                     @Override
-                    public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                    public void onFailure(@NonNull Call<List<Recipe>> call, @NonNull Throwable t) {
                         t.printStackTrace();
                     }
 
                     @Override
-                    public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                    public void onResponse(@NonNull Call<List<Recipe>> call, @NonNull Response<List<Recipe>> response) {
                         if (response.body() != null) {
                             recipes.postValue(response.body());
                             Logger.d(response.body());
@@ -67,7 +68,7 @@ public class Repository {
     }
 
     public void applyCurrentStep(Integer id) {
-
+        stepQuery.postValue(id);
     }
 
     public LiveData<Recipe> getCurrentRecipe() {
@@ -79,7 +80,7 @@ public class Repository {
     }
 
     private Recipe getRecipe(Integer input) {
-        return recipes.getValue().stream().filter(recipe -> recipe.id.equals(input)).collect(Collectors.toList()).get(0);
+        return Objects.requireNonNull(recipes.getValue()).stream().filter(recipe -> recipe.id.equals(input)).collect(Collectors.toList()).get(0);
     }
 
     public LiveData<List<Recipe>> getRecipes() {
@@ -87,6 +88,6 @@ public class Repository {
     }
 
     private Step getStep(Integer input) {
-        return getCurrentRecipe().getValue().steps.stream().filter(step -> step.id.equals(input)).collect(Collectors.toList()).get(0);
+        return Objects.requireNonNull(getCurrentRecipe().getValue()).steps.stream().filter(step -> step.id.equals(input)).collect(Collectors.toList()).get(0);
     }
 }
