@@ -1,5 +1,6 @@
 package com.snindustries.project.udacity.bake_o_bake.webservice;
 
+import android.arch.core.util.Function;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
@@ -28,7 +29,17 @@ public class Repository {
     private final MutableLiveData<Integer> stepQuery = new MutableLiveData<>();
     private LiveData<Step> currentStep = Transformations.map(stepQuery, this::getStep);
     private MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
-    private LiveData<Recipe> currentRecipe = Transformations.map(recipeQuery, this::getRecipe);
+    private LiveData<Recipe> currentRecipe = Transformations.switchMap(recipeQuery, new Function<Integer, LiveData<Recipe>>() {
+        @Override
+        public LiveData<Recipe> apply(Integer input) {
+
+            MutableLiveData<Recipe> out = new MutableLiveData<>();
+            out.postValue(getRecipe(input));
+
+            return out;
+        }
+    });
+    //private LiveData<Recipe> currentRecipe = Transformations.map(recipeQuery, this::getRecipe);
 
     private Repository() {
         RecipeClient.get().getApi().getRecipies().enqueue(
@@ -50,6 +61,11 @@ public class Repository {
                     }
                 }
         );
+        currentRecipe.observeForever(recipe -> {
+            if (recipe != null && recipe.steps != null && recipe.steps.size() > 0 && recipe.steps.get(0).id != null) {
+                applyCurrentStep(recipe.steps.get(0).id);
+            }
+        });
     }
 
     public static Repository get() {
@@ -64,7 +80,9 @@ public class Repository {
     }
 
     public void applyCurrentRecipe(Integer index) {
+
         recipeQuery.postValue(index);
+
     }
 
     public void applyCurrentStep(Integer id) {

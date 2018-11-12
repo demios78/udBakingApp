@@ -1,6 +1,7 @@
 package com.snindustries.project.udacity.bake_o_bake.ui.recpiesteps;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -15,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.snindustries.project.udacity.bake_o_bake.R;
-import com.snindustries.project.udacity.bake_o_bake.RecipeSteps;
 import com.snindustries.project.udacity.bake_o_bake.StepDetailActivity;
 import com.snindustries.project.udacity.bake_o_bake.databinding.RecpieStepsFragmentBinding;
 import com.snindustries.project.udacity.bake_o_bake.utils.AppDataBindingComponent;
@@ -29,44 +29,53 @@ import java.util.Objects;
 
 public class RecipeStepsFragment extends Fragment {
 
+    RecpieStepsFragmentBinding binding;
+    RecipeStepsViewModel viewModel;
+
     public static RecipeStepsFragment newInstance() {
         return new RecipeStepsFragment();
     }
 
-    RecipeStepsViewModel viewModel;
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        viewModel = ViewModelProviders.of(this).get(RecipeStepsViewModel.class);
+        binding.setModel(viewModel);
+        binding.setHandler(new Handler());
+        binding.setLifecycleOwner(this);
+        StepFragmentAdapter adapter = new StepFragmentAdapter();
+        binding.recycler.setAdapter(adapter);
+        viewModel.getRecipe().observe(this, new Observer<Recipe>() {
+            @Override
+            public void onChanged(@Nullable Recipe recipe) {
+                onSetTitle(recipe);
+                adapter.replaceAll(recipe.steps);
+            }
+        });
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        RecpieStepsFragmentBinding binding = DataBindingUtil.inflate(inflater, R.layout.recpie_steps_fragment, container, false, new AppDataBindingComponent());
-         viewModel = ViewModelProviders.of(this).get(RecipeStepsViewModel.class);
-        binding.setModel(viewModel);
-        binding.setHandler(new Handler());
-        binding.setLifecycleOwner(this);
-        viewModel.getRecipe().observe(this, this::onSetTitle);
+        binding = DataBindingUtil.inflate(inflater, R.layout.recpie_steps_fragment, container, false, new AppDataBindingComponent());
         return binding.getRoot();
     }
 
     private void onSetTitle(@Nullable Recipe recipe) {
-        if (recipe != null && getActivity()!=null) {
+        if (recipe != null && getActivity() != null) {
             getActivity().setTitle(recipe.name);
+
         }
     }
 
     public static class RecipeStepsViewModel extends ViewModel {
-        private final StepFragmentAdapter adapter;
+        //private final StepFragmentAdapter adapter;
         private final LiveData<Recipe> recipe;
         private final Repository repository = Repository.get();
 
         public RecipeStepsViewModel() {
             this.recipe = repository.getCurrentRecipe();
-            adapter = new StepFragmentAdapter();
-            recipe.observeForever(recipe -> adapter.addItems(recipe != null ? recipe.steps : null));
-        }
-
-        public StepFragmentAdapter getAdapter() {
-            return adapter;
         }
 
         public LiveData<Recipe> getRecipe() {
@@ -95,7 +104,7 @@ public class RecipeStepsFragment extends Fragment {
             Intent intent = new Intent(getActivity(), StepDetailActivity.class);
             intent.putExtra("EXTRA_STEP_ID", step.id);
 
-            Objects.requireNonNull(getActivity()).startActivity(intent);
+            //Objects.requireNonNull(getActivity()).startActivity(intent);
         }
     }
 }

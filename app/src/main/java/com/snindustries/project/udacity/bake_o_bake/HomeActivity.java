@@ -38,6 +38,9 @@ public class HomeActivity extends AppCompatActivity {
         binding.setModel(viewModel);
         binding.setHandler(new Handler());
         binding.setLifecycleOwner(this);
+        BakingListAdapter adapter = new BakingListAdapter(new ArrayList<>(), R.layout.recipe_card_item);
+        viewModel.recipes.observe(this, adapter::replaceAll);
+        binding.recycler.setAdapter(adapter);
         setSupportActionBar(binding.toolbar);
     }
 
@@ -49,7 +52,6 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public static class ViewModel extends AndroidViewModel {
-        private final BakingListAdapter adapter;
         private final LiveData<List<Recipe>> recipes;
         private final Repository repository;
 
@@ -57,12 +59,6 @@ public class HomeActivity extends AppCompatActivity {
             super(application);
             repository = Repository.get();
             recipes = repository.getRecipes();
-            adapter = new BakingListAdapter(new ArrayList<>(), R.layout.recipe_card_item);
-            recipes.observeForever(adapter::addItems);
-        }
-
-        public BakingListAdapter getAdapter() {
-            return adapter;
         }
 
         public void setCurrentRecipe(Integer id) {
@@ -81,7 +77,7 @@ public class HomeActivity extends AppCompatActivity {
             Intent intent = new Intent(getActivity(), RecipeSteps.class);
             intent.putExtra("EXTRA_RECIPE_ID", recipe.id);
 
-            getActivity().startActivity(intent);
+            //getActivity().startActivity(intent);
 
 
         }

@@ -3,8 +3,6 @@ package com.snindustries.project.udacity.bake_o_bake.utils;
 import android.databinding.BindingAdapter;
 import android.support.v7.widget.RecyclerView;
 
-import java.util.List;
-
 /**
  * Binds adapter to recycler.
  *
@@ -22,6 +20,14 @@ public class RecyclerViewDataBindingAdapter {
      * @param items        must be explicitly passed in
      * @param handler      handles actions on data
      */
+    @BindingAdapter(value = {"handler"})
+    public void bindRecyclerViewToAdapter(RecyclerView recyclerView, Object handler) {
+        if (recyclerView.getAdapter() != null && handler != null && recyclerView.getAdapter() instanceof ListBindingAdapter) {
+            ((ListBindingAdapter) recyclerView.getAdapter()).setHandler(handler);
+            // adapter.setHandler(handler);
+        }
+    }
+
     @BindingAdapter(value = {"adapter",  "handler"})
     public void bindRecyclerViewToAdapter(RecyclerView recyclerView, ListBindingAdapter adapter,  Object handler) {
         if (adapter != null) {

@@ -26,7 +26,7 @@ public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter {
         notifyItemInserted(items.size() - 1);
     }
 
-    public void addItems(@Nullable List<V> items) {
+    public void addItem(@Nullable List<V> items) {
         if (items == null) {
             return;
         }
@@ -34,6 +34,16 @@ public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter {
         this.items.addAll(items);
         notifyItemRangeInserted(oldList, items.size());
     }
+
+   public void replaceAll(@Nullable List<V> items) {
+        if (items == null) {
+            return;
+        }
+        this.items.clear();
+        this.items.addAll(items);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     @Nullable
