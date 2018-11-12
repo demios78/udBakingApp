@@ -7,11 +7,11 @@
 
         <variable
             name="model"
-            type="com.snindustries.project.udacity.bake_o_bake.HomeActivity.ViewModel" />
+            type="com.snindustries.project.udacity.bake_o_bake.ui.main.MainFragment.ViewModel" />
 
         <variable
             name="handler"
-            type="com.snindustries.project.udacity.bake_o_bake.HomeActivity.Handler" />
+            type="com.snindustries.project.udacity.bake_o_bake.ui.main.MainFragment.Handler" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -44,7 +44,6 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-
                 app:handler="@{handler}"
                 app:layoutManager="android.support.v7.widget.GridLayoutManager"
                 app:spanCount="@integer/grid_columns" />
@@ -55,13 +54,13 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
+
             <fragment
                 android:id="@+id/frag2"
-                android:layout_width="50dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
                 android:name="com.snindustries.project.udacity.bake_o_bake.ui.stepdetail.StepDetailFragment"
-                />
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>

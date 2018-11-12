@@ -11,14 +11,14 @@
 
         <variable
             name="handler"
-            type="com.snindustries.project.udacity.bake_o_bake.HomeActivity.Handler" />
+            type="com.snindustries.project.udacity.bake_o_bake.ui.main.MainFragment.Handler" />
     </data>
 
     <android.support.design.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_margin="@dimen/padding_double"
         android:padding="@dimen/padding_double"
-        android:onClick="@{(view)->handler.onClick(view,model )}"
+        android:onClick="@{(view)->handler.onClick( view, model )}"
         android:layout_height="wrap_content">
 
         <android.support.constraint.ConstraintLayout

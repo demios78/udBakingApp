@@ -65,7 +65,6 @@ public class RecipeStepsFragment extends Fragment {
     private void onSetTitle(@Nullable Recipe recipe) {
         if (recipe != null && getActivity() != null) {
             getActivity().setTitle(recipe.name);
-
         }
     }
 
