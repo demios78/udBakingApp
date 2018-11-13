@@ -17,5 +17,6 @@ public class RecipeStepsActivity extends AppCompatActivity {
                     .replace(R.id.container, RecipeStepsFragment.newInstance())
                     .commitNow();
         }
+        setSupportActionBar( findViewById(R.id.toolbar));
     }
 }

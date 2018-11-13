@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding_double"
                 android:layout_marginRight="@dimen/padding_double"
+                android:visibility="@{model.step.shortDescription.equals(model.step.description) ? View.GONE : View.VISIBLE }"
                 android:text="@{model.step.description ?? `Step is null`}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 tools:text="9. Cut and serve." />

@@ -19,11 +19,16 @@
     <android.support.design.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding_double"
-        android:onClick="@{(view)->handler.onClick( view, model )}"
+        android:layout_marginTop="@dimen/padding"
+        android:layout_marginStart="@dimen/padding_double"
+        android:layout_marginEnd="@dimen/padding_double"
+        android:layout_marginBottom="@dimen/padding"
         android:padding="@dimen/padding_double">
 
         <android.support.constraint.ConstraintLayout
+            android:clickable="true"
+            android:background="?android:selectableItemBackground"
+            android:onClick="@{(view)->handler.onClick( view, model )}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 

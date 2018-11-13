@@ -46,14 +46,10 @@ public class RecipeStepsFragment extends Fragment {
         binding.setLifecycleOwner(this);
         StepFragmentAdapter adapter = new StepFragmentAdapter();
         binding.recycler.setAdapter(adapter);
-        viewModel.getRecipe().observe(this, new Observer<Recipe>() {
-            @Override
-            public void onChanged(@Nullable Recipe recipe) {
-                onSetTitle(recipe);
-                adapter.replaceAll(recipe.steps);
-            }
+        viewModel.getRecipe().observe(this, recipe -> {
+            onSetTitle(recipe);
+            adapter.replaceAll(recipe.steps);
         });
-        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar);
     }
 
     @Nullable
