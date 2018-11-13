@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Bake-o-Bake</string>
+    <plurals name="serving_plural">
+        <item quantity="zero">Serves None</item>
+        <item quantity="one">Single Serving</item>
+        <item quantity="other">Serves %d</item>
+    </plurals>
 </resources>

@@ -3,6 +3,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="model"
             type="com.snindustries.project.udacity.bake_o_bake.ui.stepdetail.StepDetailFragment.StepDetailViewModel" />
@@ -12,44 +14,45 @@
             type="com.snindustries.project.udacity.bake_o_bake.ui.stepdetail.StepDetailFragment.Handler" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/detail_steps"
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/padding"
-        android:orientation="vertical"
-        tools:context=".ui.recpiesteps.RecipeStepsFragment">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/video_player"
+        <LinearLayout
+            android:id="@+id/detail_steps"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/short_description"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{model.step.shortDescription}"
-            tools:text="Something adskjfaldfja" />
+            android:layout_margin="@dimen/padding"
+            android:orientation="vertical"
+            tools:context=".ui.recpiesteps.RecipeStepsFragment">
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{model.step.description ?? `Step is null`}" />
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/video_player"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{model.step.videoURL!=null &amp;&amp; model.step.videoURL.length() > 3 ? View.VISIBLE : View.GONE}" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{model.step.videoURL}" />
+            <TextView
+                android:id="@+id/short_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding_double"
+                android:text="@{model.step.shortDescription}"
+                android:textAlignment="center"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                tools:text="Cut and Serve" />
 
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/padding_double"
+                android:layout_marginRight="@dimen/padding_double"
+                android:text="@{model.step.description ?? `Step is null`}"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                tools:text="9. Cut and serve." />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Am I here?" />
-
-    </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

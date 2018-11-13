@@ -23,9 +23,11 @@ import com.snindustries.project.udacity.bake_o_bake.databinding.MainFragmentBind
 import com.snindustries.project.udacity.bake_o_bake.utils.AppDataBindingComponent;
 import com.snindustries.project.udacity.bake_o_bake.utils.ListBindingAdapter;
 import com.snindustries.project.udacity.bake_o_bake.webservice.Repository;
+import com.snindustries.project.udacity.bake_o_bake.webservice.model.Ingredient;
 import com.snindustries.project.udacity.bake_o_bake.webservice.model.Recipe;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class MainFragment extends Fragment {
@@ -81,6 +83,37 @@ public class MainFragment extends Fragment {
     }
 
     public class Handler {
+
+        public CharSequence ingredients(List<Ingredient> ingredients) {
+
+            if (ingredients.size() == 0) {
+                return "";
+            }
+
+            String delimiter = ", ";
+            Iterator<Ingredient> it = ingredients.iterator();
+            final StringBuilder sb = new StringBuilder();
+            sb.append(it.next().ingredient);
+            while (it.hasNext()) {
+                sb.append(delimiter);
+                sb.append(it.next().ingredient);
+            }
+            return sb.toString();
+        }
+
+        public String join(@NonNull CharSequence delimiter, @NonNull Iterable tokens) {
+            final Iterator<?> it = tokens.iterator();
+            if (!it.hasNext()) {
+                return "";
+            }
+            final StringBuilder sb = new StringBuilder();
+            sb.append(it.next());
+            while (it.hasNext()) {
+                sb.append(delimiter);
+                sb.append(it.next());
+            }
+            return sb.toString();
+        }
 
         public void onClick(View view, Recipe recipe) {
             Toast.makeText(view.getContext(), "Rec " + recipe.name, Toast.LENGTH_SHORT).show();
