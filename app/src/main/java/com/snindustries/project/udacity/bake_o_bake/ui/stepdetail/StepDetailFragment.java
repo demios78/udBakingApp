@@ -134,12 +134,22 @@ public class StepDetailFragment extends Fragment {
     }
 
     public static class StepDetailViewModel extends ViewModel {
+        private final LiveData<Boolean> hasNext;
+        private final LiveData<Boolean> hasPrev;
+        private final Repository repo;
         private final LiveData<Step> step;
         private int currentWindow;
         private long playbackPosition;
 
         public StepDetailViewModel() {
-            step = Repository.get().getCurrentStep();
+            repo = Repository.get();
+            step = repo.getCurrentStep();
+            hasNext = repo.getHasNextStep();
+            hasPrev = repo.getHasPreviousStep();
+        }
+
+        public void decrementStep() {
+            repo.decrementStep();
         }
 
         public int getCurrentWindow() {
@@ -148,6 +158,14 @@ public class StepDetailFragment extends Fragment {
 
         public void setCurrentWindow(int currentWindow) {
             this.currentWindow = currentWindow;
+        }
+
+        public LiveData<Boolean> getHasNext() {
+            return hasNext;
+        }
+
+        public LiveData<Boolean> getHasPrev() {
+            return hasPrev;
         }
 
         public long getPlaybackPosition() {
@@ -161,15 +179,31 @@ public class StepDetailFragment extends Fragment {
         public LiveData<Step> getStep() {
             return step;
         }
+
+        public void incrementStep() {
+            repo.incrementStep();
+        }
+
     }
 
     public class Handler {
+
         public void onClick(View view) {
 
         }
 
-        public void onClickHideUi(View view){
+        public void onClickHideUi(View view) {
             hideSystemUi();
         }
+
+        public void onNextStepClicked(View view) {
+            viewModel.incrementStep();
+        }
+
+        public void onPreviousSteoClicked(View view) {
+            viewModel.decrementStep();
+        }
+
+
     }
 }

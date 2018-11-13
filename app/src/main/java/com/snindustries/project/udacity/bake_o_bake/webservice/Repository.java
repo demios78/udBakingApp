@@ -34,6 +34,8 @@ public class Repository {
         out.postValue(getRecipe(input));
         return out;
     });
+    private final LiveData<Boolean> hasNextStep = Transformations.map(stepQuery, input -> currentRecipe.getValue() != null && hasNextStep(input));
+    private final LiveData<Boolean> hasPreviousStep = Transformations.map(stepQuery, input -> currentRecipe.getValue() != null && hasPreviousStep(input));
 
     private Repository() {
         RecipeClient.get().getApi().getRecipies().enqueue(new GetRecipeList());
@@ -59,12 +61,28 @@ public class Repository {
         stepQuery.postValue(id);
     }
 
+    public void decrementStep() {
+        List<Step> steps = getCurrentRecipe().getValue().steps;
+        int index = steps.indexOf(getStep(stepQuery.getValue()));
+        if (index > 0) {
+            applyCurrentStep(steps.get(index - 1).id);
+        }
+    }
+
     public LiveData<Recipe> getCurrentRecipe() {
         return currentRecipe;
     }
 
     public LiveData<Step> getCurrentStep() {
         return currentStep;
+    }
+
+    public LiveData<Boolean> getHasNextStep() {
+        return hasNextStep;
+    }
+
+    public LiveData<Boolean> getHasPreviousStep() {
+        return hasPreviousStep;
     }
 
     private Recipe getRecipe(Integer input) {
@@ -84,6 +102,38 @@ public class Repository {
                 .filter(step -> step.id.equals(input))
                 .collect(Collectors.toList())
                 .get(0);
+    }
+
+    private boolean hasNextStep(Integer input) {
+        if (getCurrentRecipe().getValue() == null) {
+            return false;
+        }
+        List<Step> steps = Objects.requireNonNull(getCurrentRecipe().getValue()).steps;
+        int index = steps.indexOf(getStep(input));
+        if (index == -1) {
+            return false;
+        }
+        return index >= steps.size() - 1;
+    }
+
+    private boolean hasPreviousStep(Integer input) {
+        if (getCurrentRecipe().getValue() == null) {
+            return false;
+        }
+        List<Step> steps = Objects.requireNonNull(getCurrentRecipe().getValue()).steps;
+        int index = steps.indexOf(getStep(input));
+        if (index == -1) {
+            return false;
+        }
+        return index > 0;
+    }
+
+    public void incrementStep() {
+        List<Step> steps = getCurrentRecipe().getValue().steps;
+        int index = steps.indexOf(getStep(stepQuery.getValue()));
+        if (index < steps.size() - 1) {
+            applyCurrentStep(steps.get(index + 1).id);
+        }
     }
 
     private void resetStepOnRecipeChange(@Nullable Recipe recipe) {

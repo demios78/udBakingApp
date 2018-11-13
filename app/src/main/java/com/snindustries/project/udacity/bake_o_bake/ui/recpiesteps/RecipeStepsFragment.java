@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.snindustries.project.udacity.bake_o_bake.R;
 import com.snindustries.project.udacity.bake_o_bake.StepDetailActivity;
@@ -203,15 +202,13 @@ public class RecipeStepsFragment extends Fragment {
 
     public class Handler {
         public void onClick(View view, Step step) {
-            Toast.makeText(view.getContext(), "Step: " + step.description, Toast.LENGTH_SHORT).show();
-
             viewModel.setCurrentStep(step.id);
 
-            //IF in phone mode, start activity
-            Intent intent = new Intent(getActivity(), StepDetailActivity.class);
-            intent.putExtra("EXTRA_STEP_ID", step.id);
-
-            Objects.requireNonNull(getActivity()).startActivity(intent);
+            if (getResources().getInteger(R.integer.grid_columns) == 1) {
+                //IF in phone mode, start activity
+                Intent intent = new Intent(getActivity(), StepDetailActivity.class);
+                Objects.requireNonNull(getActivity()).startActivity(intent);
+            }
         }
     }
 }

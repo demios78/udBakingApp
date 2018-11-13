@@ -1,4 +1,5 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -30,6 +31,7 @@
             <com.google.android.exoplayer2.ui.PlayerView
                 android:id="@+id/video_player"
                 android:layout_width="match_parent"
+                app:resize_mode="fixed_width"
                 android:layout_height="wrap_content"
                 android:visibility="@{model.step.videoURL!=null &amp;&amp; model.step.videoURL.length() > 3 ? View.VISIBLE : View.GONE}" />
 
