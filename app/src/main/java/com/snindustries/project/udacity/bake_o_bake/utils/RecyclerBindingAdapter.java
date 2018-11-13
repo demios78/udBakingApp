@@ -6,6 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.snindustries.project.udacity.bake_o_bake.BR;
@@ -50,30 +51,43 @@ public abstract class RecyclerBindingAdapter<V, H> extends RecyclerView.Adapter<
 
     @Override
     public boolean onFailedToRecycleView(@NonNull BindingViewHolder<V, H> holder) {
-        holder.itemView.clearAnimation();
+        holder.onFailToRecycleView();
         return super.onFailedToRecycleView(holder);
     }
 
     @Override
     public void onViewAttachedToWindow(@NonNull BindingViewHolder<V, H> holder) {
         super.onViewAttachedToWindow(holder);
-        DataBindingUtil.bind(holder.itemView);
-        holder.binding.executePendingBindings();
+        holder.bind();
     }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull BindingViewHolder<V, H> holder) {
         super.onViewDetachedFromWindow(holder);
-        holder.binding.unbind();
+        holder.unbind();
     }
 
     protected static class BindingViewHolder<V, H> extends RecyclerView.ViewHolder {
 
         protected final ViewDataBinding binding;
 
+        protected BindingViewHolder(View root) {
+            super(root);
+            binding = null;
+        }
+
         protected BindingViewHolder(ViewDataBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+        }
+
+        protected void bind() {
+            DataBindingUtil.bind(this.itemView);
+            this.binding.executePendingBindings();
+        }
+
+        protected void onFailToRecycleView() {
+            itemView.clearAnimation();
         }
 
         protected void setHandler(H handler) {
@@ -86,6 +100,10 @@ public abstract class RecyclerBindingAdapter<V, H> extends RecyclerView.Adapter<
             if (!binding.setVariable(BR.model, viewModel)) {
                 throw new IllegalStateException("Binding ${holder.binding} viewModel variable name should be 'model'");
             }
+        }
+
+        protected void unbind() {
+            this.binding.unbind();
         }
     }
 }

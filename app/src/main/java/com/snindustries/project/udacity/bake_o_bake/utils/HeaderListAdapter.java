@@ -2,6 +2,7 @@ package com.snindustries.project.udacity.bake_o_bake.utils;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import java.util.List;
 
@@ -11,13 +12,14 @@ import java.util.List;
  * @author Shaaz Noormohammad
  * (c) 2018
  */
-public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter {
+public class HeaderListAdapter<HM, V, H> extends ListBindingAdapter<V,H> {
 
-    protected final List<V> items;
+    private final List<V> items;
     private H handler;
+    private View Header;
 
-    public ListBindingAdapter(@NonNull List<V> items, int layoutID) {
-        super(layoutID);
+    public HeaderListAdapter(List<HM> headerList, @NonNull List<V> items, int layoutID) {
+        super(items, layoutID);
         this.items = items;
     }
 
