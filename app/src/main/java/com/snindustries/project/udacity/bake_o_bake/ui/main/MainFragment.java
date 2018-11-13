@@ -91,7 +91,7 @@ public class MainFragment extends Fragment {
             Intent intent = new Intent(getActivity(), RecipeSteps.class);
             intent.putExtra("EXTRA_RECIPE_ID", recipe.id);
 
-            //getActivity().startActivity(intent);
+            getActivity().startActivity(intent);
 
         }
 

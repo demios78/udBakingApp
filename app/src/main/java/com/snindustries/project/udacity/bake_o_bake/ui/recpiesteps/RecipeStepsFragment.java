@@ -103,7 +103,7 @@ public class RecipeStepsFragment extends Fragment {
             Intent intent = new Intent(getActivity(), StepDetailActivity.class);
             intent.putExtra("EXTRA_STEP_ID", step.id);
 
-            //Objects.requireNonNull(getActivity()).startActivity(intent);
+            Objects.requireNonNull(getActivity()).startActivity(intent);
         }
     }
 }

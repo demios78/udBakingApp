@@ -48,19 +48,19 @@
                 app:layoutManager="android.support.v7.widget.GridLayoutManager"
                 app:spanCount="@integer/grid_columns" />
 
-            <fragment
-                android:id="@+id/frag"
-                android:name="com.snindustries.project.udacity.bake_o_bake.ui.recpiesteps.RecipeStepsFragment"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+            <!--<fragment-->
+                <!--android:id="@+id/frag"-->
+                <!--android:name="com.snindustries.project.udacity.bake_o_bake.ui.recpiesteps.RecipeStepsFragment"-->
+                <!--android:layout_width="50dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1" />-->
 
-            <fragment
-                android:id="@+id/frag2"
-                android:name="com.snindustries.project.udacity.bake_o_bake.ui.stepdetail.StepDetailFragment"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+            <!--<fragment-->
+                <!--android:id="@+id/frag2"-->
+                <!--android:name="com.snindustries.project.udacity.bake_o_bake.ui.stepdetail.StepDetailFragment"-->
+                <!--android:layout_width="50dp"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1" />-->
 
         </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>
