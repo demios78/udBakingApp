@@ -31,9 +31,9 @@
             <com.google.android.exoplayer2.ui.PlayerView
                 android:id="@+id/video_player"
                 android:layout_width="match_parent"
-                app:resize_mode="fixed_width"
                 android:layout_height="wrap_content"
-                android:visibility="@{model.step.videoURL!=null &amp;&amp; model.step.videoURL.length() > 3 ? View.VISIBLE : View.GONE}" />
+                android:visibility="@{model.step.videoURL!=null &amp;&amp; model.step.videoURL.length() > 3 ? View.VISIBLE : View.GONE}"
+                app:resize_mode="fixed_width" />
 
             <TextView
                 android:id="@+id/short_description"
@@ -51,10 +51,38 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding_double"
                 android:layout_marginRight="@dimen/padding_double"
-                android:visibility="@{model.step.shortDescription.equals(model.step.description) ? View.GONE : View.VISIBLE }"
                 android:text="@{model.step.description ?? `Step is null`}"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:visibility="@{model.step.shortDescription.equals(model.step.description) ? View.GONE : View.VISIBLE }"
                 tools:text="9. Cut and serve." />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/padding"
+                android:orientation="horizontal">
+
+                <android.support.design.button.MaterialButton
+                    android:id="@+id/previous_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/padding_half"
+                    android:layout_weight="1"
+                    android:enabled="@{model.hasPrev}"
+                    android:onClick="@{(view)->handler.onPreviousSteoClicked(view)}"
+                    android:text="@string/previous" />
+
+                <android.support.design.button.MaterialButton
+                    android:id="@+id/next_btn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/padding_half"
+                    android:layout_weight="1"
+                    android:enabled="@{model.hasNext}"
+                    android:onClick="@{(view)->handler.onNextStepClicked(view)}"
+                    android:text="@string/next" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

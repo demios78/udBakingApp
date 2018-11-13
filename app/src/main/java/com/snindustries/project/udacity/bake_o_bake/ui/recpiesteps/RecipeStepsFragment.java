@@ -126,6 +126,11 @@ public class RecipeStepsFragment extends Fragment {
         }
 
         @Override
+        public int getItemCount() {
+            return super.getItemCount() + (header != null ? 1 : 0);
+        }
+
+        @Override
         public int getItemViewType(int position) {
             if (header != null && position == 0) {
                 return HEADER;

@@ -108,12 +108,12 @@ public class Repository {
         if (getCurrentRecipe().getValue() == null) {
             return false;
         }
-        List<Step> steps = Objects.requireNonNull(getCurrentRecipe().getValue()).steps;
+        List<Step> steps = (getCurrentRecipe().getValue()).steps;
         int index = steps.indexOf(getStep(input));
         if (index == -1) {
             return false;
         }
-        return index >= steps.size() - 1;
+        return index < steps.size() - 1;
     }
 
     private boolean hasPreviousStep(Integer input) {
