@@ -32,6 +32,9 @@ import java.util.List;
 
 public class MainFragment extends Fragment {
 
+    //TODO add Network state broadcast receiver and restart network fetch
+
+
     private MainFragmentBinding binding;
     private ViewModel viewModel;
 
@@ -50,6 +53,7 @@ public class MainFragment extends Fragment {
         viewModel.recipes.observe(this, adapter::replaceAll);
         binding.recycler.setAdapter(adapter);
         binding.toolbar.setTitle(R.string.app_name);
+        //TODO
         //binding.recycler.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
     }
 
@@ -75,6 +79,10 @@ public class MainFragment extends Fragment {
             super(application);
             repository = Repository.get();
             recipes = repository.getRecipes();
+        }
+
+        public LiveData<List<Recipe>> getRecipes() {
+            return recipes;
         }
 
         public void setCurrentRecipe(Integer id) {

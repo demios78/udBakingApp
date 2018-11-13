@@ -2,6 +2,7 @@
     <string name="app_name">Bake-o-Bake</string>
     <string name="previous">Previous</string>
     <string name="next">Next</string>
+    <string name="loading">Loading...</string>
     <plurals name="serving_plural">
         <item quantity="zero">Serves None</item>
         <item quantity="one">Single Serving</item>
