@@ -4,6 +4,7 @@ package com.snindustries.project.udacity.bake_o_bake.ui.main;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -15,8 +16,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
+import com.snindustries.project.udacity.bake_o_bake.NetworkIdlingResource;
 import com.snindustries.project.udacity.bake_o_bake.R;
 import com.snindustries.project.udacity.bake_o_bake.RecipeStepsActivity;
 import com.snindustries.project.udacity.bake_o_bake.databinding.MainFragmentBinding;
@@ -36,10 +37,19 @@ public class MainFragment extends Fragment {
 
 
     private MainFragmentBinding binding;
+    private NetworkIdlingResource idlingResource;
     private ViewModel viewModel;
 
     public static MainFragment newInstance() {
         return new MainFragment();
+    }
+
+    public NetworkIdlingResource getIdlingResource() {
+        return idlingResource;
+    }
+
+    public void setIdlingResource(NetworkIdlingResource idlingResource) {
+        this.idlingResource = idlingResource;
     }
 
     @Override
@@ -55,6 +65,12 @@ public class MainFragment extends Fragment {
         binding.toolbar.setTitle(R.string.app_name);
         //TODO
         //binding.recycler.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        viewModel.recipes.observe(this, new Observer<List<Recipe>>() {
+            @Override
+            public void onChanged(@Nullable List<Recipe> recipes) {
+                getIdlingResource().setIsIdleNow(recipes != null);
+            }
+        });
     }
 
     @Nullable
@@ -124,16 +140,10 @@ public class MainFragment extends Fragment {
         }
 
         public void onClick(View view, Recipe recipe) {
-            Toast.makeText(view.getContext(), "Rec " + recipe.name, Toast.LENGTH_SHORT).show();
-
             viewModel.setCurrentRecipe(recipe.id);
 
-            //IF in phone mode, start activity
             Intent intent = new Intent(getActivity(), RecipeStepsActivity.class);
-            intent.putExtra("EXTRA_RECIPE_ID", recipe.id);
-
             getActivity().startActivity(intent);
-
         }
 
     }

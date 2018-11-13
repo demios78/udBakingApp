@@ -90,4 +90,18 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.7.3'
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.7.3'
 
+    //Testing
+    testImplementation 'junit:junit:4.12'
+    def espresso_version = "3.0.2"
+    def test_rules = "0.5"
+    implementation "com.android.support.test.espresso:espresso-idling-resource:$espresso_version"
+
+    // Testing-only dependencies
+    androidTestImplementation "com.android.support:support-annotations:$appCompat"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-intents:$espresso_version"
+    androidTestImplementation "com.android.support.test:rules:$test_rules"
+    androidTestImplementation "com.android.support.test:runner:$test_rules"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
+
 }
