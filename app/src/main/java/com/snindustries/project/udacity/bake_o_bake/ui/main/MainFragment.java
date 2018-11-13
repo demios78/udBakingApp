@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.snindustries.project.udacity.bake_o_bake.R;
-import com.snindustries.project.udacity.bake_o_bake.RecipeSteps;
+import com.snindustries.project.udacity.bake_o_bake.RecipeStepsActivity;
 import com.snindustries.project.udacity.bake_o_bake.databinding.MainFragmentBinding;
 import com.snindustries.project.udacity.bake_o_bake.utils.AppDataBindingComponent;
 import com.snindustries.project.udacity.bake_o_bake.utils.ListBindingAdapter;
@@ -121,7 +121,7 @@ public class MainFragment extends Fragment {
             viewModel.setCurrentRecipe(recipe.id);
 
             //IF in phone mode, start activity
-            Intent intent = new Intent(getActivity(), RecipeSteps.class);
+            Intent intent = new Intent(getActivity(), RecipeStepsActivity.class);
             intent.putExtra("EXTRA_RECIPE_ID", recipe.id);
 
             getActivity().startActivity(intent);

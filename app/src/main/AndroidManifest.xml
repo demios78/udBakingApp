@@ -14,7 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".RecipeSteps" />
+        <activity
+            android:name=".RecipeStepsActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".StepDetailActivity" />
         <activity
             android:name=".MainActivity"
