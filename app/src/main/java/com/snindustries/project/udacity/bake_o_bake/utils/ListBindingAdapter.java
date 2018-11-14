@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Recycler View is bound using this adapter.
- *
+ * <p>
  * V is the ViewModel
  * H is the MainRecipeHandler
  *
@@ -38,16 +38,6 @@ public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter<V, H> {
         notifyItemRangeInserted(oldList, items.size());
     }
 
-   public void replaceAll(@Nullable List<V> items) {
-        if (items == null) {
-            return;
-        }
-        this.items.clear();
-        this.items.addAll(items);
-        notifyDataSetChanged();
-    }
-
-
     @Override
     @Nullable
     protected H getHandler(int position) {
@@ -70,6 +60,15 @@ public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter<V, H> {
             items.remove(item);
             notifyItemRemoved(index);
         }
+    }
+
+    public void replaceAll(@Nullable List<V> items) {
+        if (items == null) {
+            return;
+        }
+        this.items.clear();
+        this.items.addAll(items);
+        notifyDataSetChanged();
     }
 
     public void setHandler(H handler) {

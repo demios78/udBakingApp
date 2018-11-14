@@ -31,6 +31,7 @@ public class BakingWidgetConfigureActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "com.snindustries.project.udacity.bake_o_bake.widget.BakingWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+
     public BakingWidgetConfigureActivity() {
         super();
     }

@@ -28,8 +28,8 @@ public class RecyclerViewDataBindingAdapter {
         }
     }
 
-    @BindingAdapter(value = {"adapter",  "handler"})
-    public void bindRecyclerViewToAdapter(RecyclerView recyclerView, ListBindingAdapter adapter,  Object handler) {
+    @BindingAdapter(value = {"adapter", "handler"})
+    public void bindRecyclerViewToAdapter(RecyclerView recyclerView, ListBindingAdapter adapter, Object handler) {
         if (adapter != null) {
             recyclerView.setAdapter(adapter);
         }

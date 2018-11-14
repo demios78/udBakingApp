@@ -1,6 +1,6 @@
 package com.snindustries.project.udacity.bake_o_bake.utils;
 
-import android.databinding.*;
+import android.databinding.BindingAdapter;
 import android.text.TextUtils;
 import android.widget.ImageView;
 

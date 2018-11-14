@@ -1,7 +1,7 @@
 package com.snindustries.project.udacity.bake_o_bake;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.snindustries.project.udacity.bake_o_bake.ui.stepdetail.StepDetailFragment;
 

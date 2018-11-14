@@ -48,12 +48,12 @@ public class RecipeClient {
         return INSTANCE;
     }
 
-    public RecipeApi getApi() {
-        return api;
-    }
-
     private RecipeApi createApi() {
         return retrofit.create(RecipeApi.class);
+    }
+
+    public RecipeApi getApi() {
+        return api;
     }
 
     private static class Params {
