@@ -89,7 +89,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/serving"
                 app:layout_constraintStart_toStartOf="@+id/serving"
                 app:layout_constraintTop_toBottomOf="@+id/serving"
-                tools:text="Ingreditends" />
+                tools:text="Flour, sugar, eggs, water" />
 
 
         </android.support.constraint.ConstraintLayout>

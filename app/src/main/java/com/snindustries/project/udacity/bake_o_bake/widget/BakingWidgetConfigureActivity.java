@@ -1,8 +1,6 @@
 package com.snindustries.project.udacity.bake_o_bake.widget;
 
-import android.app.Application;
 import android.appwidget.AppWidgetManager;
-import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
@@ -10,15 +8,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.snindustries.project.udacity.bake_o_bake.R;
 import com.snindustries.project.udacity.bake_o_bake.databinding.BakingWidgetConfigureBinding;
 import com.snindustries.project.udacity.bake_o_bake.ui.main.MainRecipeHandler;
+import com.snindustries.project.udacity.bake_o_bake.utils.AppDataBindingComponent;
 import com.snindustries.project.udacity.bake_o_bake.utils.BindingHeaderAdapter;
 import com.snindustries.project.udacity.bake_o_bake.webservice.Repository;
 import com.snindustries.project.udacity.bake_o_bake.webservice.model.Ingredient;
@@ -35,27 +31,6 @@ public class BakingWidgetConfigureActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "com.snindustries.project.udacity.bake_o_bake.widget.BakingWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    EditText mAppWidgetText;
-    View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            final Context context = BakingWidgetConfigureActivity.this;
-
-            // When the button is clicked, store the string locally
-            String widgetText = mAppWidgetText.getText().toString();
-            saveTitlePref(context, mAppWidgetId, widgetText);
-
-            // It is the responsibility of the configuration activity to update the app widget
-            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
-            BakingWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
-
-            // Make sure we pass back the original appWidgetId
-            Intent resultValue = new Intent();
-            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
-            setResult(RESULT_OK, resultValue);
-            finish();
-        }
-    };
-
     public BakingWidgetConfigureActivity() {
         super();
     }
@@ -74,7 +49,7 @@ public class BakingWidgetConfigureActivity extends AppCompatActivity {
         if (titleValue != null) {
             return titleValue;
         } else {
-            return context.getString(R.string.appwidget_text);
+            return context.getString(R.string.selection);
         }
     }
 
@@ -93,7 +68,7 @@ public class BakingWidgetConfigureActivity extends AppCompatActivity {
         // out of the widget placement if the user presses the back button.
         setResult(RESULT_CANCELED);
 
-        BakingWidgetConfigureBinding binding = DataBindingUtil.setContentView(this, R.layout.baking_widget_configure);
+        BakingWidgetConfigureBinding binding = DataBindingUtil.setContentView(this, R.layout.baking_widget_configure, new AppDataBindingComponent());
         ViewModel viewModel = ViewModelProviders.of(this).get(ViewModel.class);
         ConfigureAdapter adapter = new ConfigureAdapter();
 
@@ -101,11 +76,10 @@ public class BakingWidgetConfigureActivity extends AppCompatActivity {
         binding.setLifecycleOwner(this);
         binding.recycler.setAdapter(adapter);
         binding.setModel(viewModel);
-
-
-//        setContentView(R.layout.baking_widget_configure);
-//        mAppWidgetText = (EditText) findViewById(R.id.appwidget_text);
-//        findViewById(R.id.add_button).setOnClickListener(mOnClickListener);
+        binding.setHandler(new Handler());
+        viewModel.getRecipes().observe(this, adapter::replaceAll);
+        setSupportActionBar(binding.toolbar);
+        setTitle(R.string.selection);
 
         // Find the widget id from the intent.
         Intent intent = getIntent();
@@ -118,16 +92,27 @@ public class BakingWidgetConfigureActivity extends AppCompatActivity {
         // If this activity was started with an intent without an app widget ID, finish with an error.
         if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
             finish();
-            return;
         }
-
-        mAppWidgetText.setText(loadTitlePref(BakingWidgetConfigureActivity.this, mAppWidgetId));
     }
 
     private static class ConfigureAdapter extends BindingHeaderAdapter<Recipe, Handler> {
 
         public ConfigureAdapter() {
             super(new ArrayList<>(), R.layout.recipe_card_item);
+        }
+    }
+
+    public static class ViewModel extends android.arch.lifecycle.ViewModel {
+        private final LiveData<List<Recipe>> recipes;
+        private final Repository repository;
+
+        public ViewModel() {
+            repository = Repository.get();
+            recipes = repository.getRecipes();
+        }
+
+        public LiveData<List<Recipe>> getRecipes() {
+            return recipes;
         }
     }
 
@@ -144,23 +129,22 @@ public class BakingWidgetConfigureActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view, Recipe recipe) {
-            //Select this recipe
-            Toast.makeText(view.getContext(), "Selecting Recipe: " + recipe.name, Toast.LENGTH_SHORT).show();
-        }
-    }
 
-    public class ViewModel extends AndroidViewModel {
-        private final LiveData<List<Recipe>> recipes;
-        private final Repository repository;
+            final Context context = BakingWidgetConfigureActivity.this;
 
-        public ViewModel(@NonNull Application application) {
-            super(application);
-            repository = Repository.get();
-            recipes = repository.getRecipes();
-        }
+            // When the button is clicked, store the string locally
+            String widgetText = ingredients(recipe.ingredients).toString();
+            saveTitlePref(context, mAppWidgetId, widgetText);
 
-        public LiveData<List<Recipe>> getRecipes() {
-            return recipes;
+            // It is the responsibility of the configuration activity to update the app widget
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            BakingWidget.updateAppWidget(context, appWidgetManager, mAppWidgetId);
+
+            // Make sure we pass back the original appWidgetId
+            Intent resultValue = new Intent();
+            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+            setResult(RESULT_OK, resultValue);
+            finish();
         }
     }
 
