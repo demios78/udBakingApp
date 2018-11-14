@@ -13,7 +13,7 @@
 
         <variable
             name="handler"
-            type="com.snindustries.project.udacity.bake_o_bake.ui.main.MainFragment.Handler" />
+            type="com.snindustries.project.udacity.bake_o_bake.ui.main.MainRecipeHandler" />
     </data>
 
     <android.support.design.card.MaterialCardView

@@ -19,7 +19,7 @@ import com.snindustries.project.udacity.bake_o_bake.R;
 import com.snindustries.project.udacity.bake_o_bake.StepDetailActivity;
 import com.snindustries.project.udacity.bake_o_bake.databinding.RecpieStepsFragmentBinding;
 import com.snindustries.project.udacity.bake_o_bake.utils.AppDataBindingComponent;
-import com.snindustries.project.udacity.bake_o_bake.utils.ListBindingAdapter;
+import com.snindustries.project.udacity.bake_o_bake.utils.BindingHeaderAdapter;
 import com.snindustries.project.udacity.bake_o_bake.webservice.Repository;
 import com.snindustries.project.udacity.bake_o_bake.webservice.model.Ingredient;
 import com.snindustries.project.udacity.bake_o_bake.webservice.model.Recipe;
@@ -61,7 +61,7 @@ public class RecipeStepsFragment extends Fragment {
         binding.setModel(viewModel);
         binding.setHandler(new Handler());
         binding.setLifecycleOwner(this);
-        StepFragmentAdapter adapter = new StepFragmentAdapter();
+        BindingHeaderAdapter adapter = new StepsAdapter();
         binding.recycler.setAdapter(adapter);
         viewModel.getRecipe().observe(this, recipe -> {
             onSetTitle(recipe);
@@ -102,106 +102,10 @@ public class RecipeStepsFragment extends Fragment {
         }
     }
 
-    public static class StepFragmentAdapter extends ListBindingAdapter<Step, Handler> {
+    public static class StepsAdapter extends BindingHeaderAdapter<Step, Handler> {
 
-        public static final int HEADER = 1;
-
-        private View header;
-
-        public StepFragmentAdapter() {
+        public StepsAdapter() {
             super(new ArrayList<>(), R.layout.recipe_step_item);
-        }
-
-        @Nullable
-        @Override
-        protected Handler getHandler(int position) {
-            if (header != null) {
-                if (position == 0) {
-                    return null;
-                } else {
-                    return super.getHandler(position - 1);
-                }
-            }
-            return super.getHandler(position);
-        }
-
-        @Override
-        public int getItemCount() {
-            return super.getItemCount() + (header != null ? 1 : 0);
-        }
-
-        @Override
-        public int getItemViewType(int position) {
-            if (header != null && position == 0) {
-                return HEADER;
-            }
-            return super.getItemViewType(position);
-        }
-
-        @Override
-        protected Step getViewModel(int position) {
-            if (header != null) {
-                if (position == 0) {
-                    return null;
-                } else {
-                    return super.getViewModel(position - 1);
-                }
-            }
-            return super.getViewModel(position);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull BindingViewHolder holder, int position) {
-            if (header != null && position == 0) {
-                //Do nothing
-            } else {
-                super.onBindViewHolder(holder, position);
-            }
-        }
-
-        @NonNull
-        @Override
-        public BindingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            if (viewType == HEADER) {
-                return new DummyViewHolder(header);
-            }
-            return super.onCreateViewHolder(parent, viewType);
-        }
-
-        void setHeaderView(View header) {
-            this.header = header;
-        }
-
-        private static class DummyViewHolder extends BindingViewHolder {
-
-            DummyViewHolder(View header) {
-                super(header);
-            }
-
-            @Override
-            protected void bind() {
-                //
-            }
-
-            @Override
-            protected void onFailToRecycleView() {
-                //
-            }
-
-            @Override
-            protected void setHandler(Object handler) {
-                //
-            }
-
-            @Override
-            protected void setViewModel(Object viewModel) {
-                //
-            }
-
-            @Override
-            protected void unbind() {
-                //
-            }
         }
     }
 

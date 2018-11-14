@@ -8,10 +8,13 @@ import java.util.List;
 /**
  * Recycler View is bound using this adapter.
  *
+ * V is the ViewModel
+ * H is the MainRecipeHandler
+ *
  * @author Shaaz Noormohammad
  * (c) 2018
  */
-public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter {
+public class ListBindingAdapter<V, H> extends RecyclerBindingAdapter<V, H> {
 
     protected final List<V> items;
     private H handler;
